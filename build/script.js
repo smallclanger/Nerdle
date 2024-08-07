@@ -79,7 +79,7 @@ function checkGuess() {
     return;
   }*/
 
-  var letterColor = ["gray", "gray", "gray", "gray", "gray"];
+//  var letterColor = ["gray", "gray", "gray", "gray", "gray"];
 var letterColor =[];
 	for(let lc =0;lc<rightGuessString.length;lc++)
 		letterColor.push("gray");
