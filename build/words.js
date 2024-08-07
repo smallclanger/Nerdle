@@ -41,7 +41,7 @@ export const WORDS = [
 	'grand moff tarkin',
 	'greedo',
 	'han solo',
-	'jabba the hut',
+	'jabba the hutt',
 	'imperial star destroyer',
 	'jan dodonna',
 	'jed porkins',
