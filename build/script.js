@@ -133,7 +133,12 @@ function checkGuess() {
 }
 
 function insertLetter(pressedKey) {
-	if(pressedKey.toUpperCase() != pressedKey.toLowerCase() )
+	if(pressedKey.charCodeAt(0)<97 || pressedKey.charCodeAt(0)>122)
+	{
+		console.log('no char');
+		return;
+	}
+	if(pressedKey.toUpperCase() === pressedKey.toLowerCase() )
 		return;
 	
   if (nextLetter === rightGuessString.length) {
