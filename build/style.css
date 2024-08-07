@@ -2,6 +2,16 @@ h1 {
  text-align: center;
 }
 
+form {
+    width: 800px;
+}
+
+@media only screen and (max-width: 800px) {
+    form {
+        width: 100%;
+    }
+}
+
 #game-board {
   display: flex;
   align-items: center;
