@@ -80,7 +80,9 @@ function checkGuess() {
   }*/
 
   var letterColor = ["gray", "gray", "gray", "gray", "gray"];
-
+var letterColor =[];
+	for(let lc =0;lc<rightGuessString.length;lc++)
+		letterColor.push("gray");
   //check green
   for (let i = 0; i < rightGuessString.length; i++) {
     if (rightGuess[i] == currentGuess[i]) {
