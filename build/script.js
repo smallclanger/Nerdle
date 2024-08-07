@@ -15,9 +15,17 @@ function initBoard() {
     let row = document.createElement("div");
     row.className = "letter-row";
 
-    for (let j = 0; j < 5; j++) {
-      let box = document.createElement("div");
-      box.className = "letter-box";
+    for (let j = 0; j < rightGuessString.length; j++) {
+		let box = document.createElement("div");
+		if(rightGuessString[j]===' ' || rightGuessString[j]==='-')
+		{
+			box.className = "space-box";
+			box.textContent = rightGuessString[j];
+		}
+		else
+			box.className = "letter-box";
+			
+      
       row.appendChild(box);
     }
 
@@ -61,20 +69,20 @@ function checkGuess() {
     guessString += val;
   }
 
-  if (guessString.length != 5) {
+  if (guessString.length != rightGuessString.length) {
     toastr.error("Not enough letters!");
     return;
   }
 
-  if (!WORDS.includes(guessString)) {
+  /*if (!WORDS.includes(guessString)) {
     toastr.error("Word not in list!");
     return;
-  }
+  }*/
 
   var letterColor = ["gray", "gray", "gray", "gray", "gray"];
 
   //check green
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < rightGuessString.length; i++) {
     if (rightGuess[i] == currentGuess[i]) {
       letterColor[i] = "green";
       rightGuess[i] = "#";
@@ -83,11 +91,11 @@ function checkGuess() {
 
   //check yellow
   //checking guess letters
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < rightGuessString.length; i++) {
     if (letterColor[i] == "green") continue;
 
     //checking right letters
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < rightGuessString.length; j++) {
       if (rightGuess[j] == currentGuess[i]) {
         letterColor[i] = "yellow";
         rightGuess[j] = "#";
@@ -95,7 +103,8 @@ function checkGuess() {
     }
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < rightGuessString.length; i++) {
+	  if(guessString[i]===' ' || guessString[i]==='-') continue;
     let box = row.children[i];
     let delay = 250 * i;
     setTimeout(() => {
@@ -124,7 +133,10 @@ function checkGuess() {
 }
 
 function insertLetter(pressedKey) {
-  if (nextLetter === 5) {
+	if(pressedKey.toUpperCase() != pressedKey.toLowerCase() )
+		return;
+	
+  if (nextLetter === rightGuessString.length) {
     return;
   }
   pressedKey = pressedKey.toLowerCase();
@@ -136,6 +148,11 @@ function insertLetter(pressedKey) {
   box.classList.add("filled-box");
   currentGuess.push(pressedKey);
   nextLetter += 1;
+  if(rightGuessString[nextLetter]===' ' || rightGuessString[nextLetter]==='-') 
+  {
+	  currentGuess.push(rightGuessString[nextLetter]);
+	  nextLetter += 1;
+  }
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
