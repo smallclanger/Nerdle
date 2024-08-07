@@ -219,7 +219,7 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
   document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
 
-
+/*
 document.getElementById("keyboard-cont").addEventListener("touchstart", (e) => {
   const target = e.target;
 
@@ -234,5 +234,5 @@ document.getElementById("keyboard-cont").addEventListener("touchstart", (e) => {
 
   document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
-
+*/
 initBoard();
