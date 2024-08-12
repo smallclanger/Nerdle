@@ -5,6 +5,7 @@ let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
+let allGuesses = [];
 
 console.log(rightGuessString);
 
@@ -79,7 +80,7 @@ function checkGuess() {
     return;
   }*/
 
-//  var letterColor = ["gray", "gray", "gray", "gray", "gray"];
+
 var letterColor =[];
 	for(let lc =0;lc<rightGuessString.length;lc++)
 		letterColor.push("gray");
@@ -117,6 +118,8 @@ var letterColor =[];
       shadeKeyBoard(guessString.charAt(i) + "", letterColor[i]);
     }, delay);
   }
+
+	allGuesses.push(letterColor);
 
   if (guessString === rightGuessString) {
     toastr.success("You guessed right! Game over!");
@@ -237,4 +240,28 @@ document.getElementById("keyboard-cont").addEventListener("touchstart", (e) => {
   document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
 */
+
+document.getElementById("myForm").addEventListener("click", (e) => {
+  const target = e.target;
+
+  if (!target.classList.contains("share-btn")) {
+    return;
+  }
+  
+  
+    if (navigator.share) {
+    navigator.share({
+		text: 'test 123',
+      title: 'WebShare API Demo',
+      url: 'https://bbc.co.uk'
+    }).then(() => {
+      console.log('Thanks for sharing!');
+    })
+    .catch(console.error);
+  } else {
+    // fallback
+  }
+  
+});
+
 initBoard();
