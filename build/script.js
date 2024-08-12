@@ -19,7 +19,6 @@ function initBoard() {
     for (let j = 0; j < rightGuessString.length; j++) {
 		let box = document.createElement("div");
 		if(isSpecialCharacter(rightGuessString[j]))
-		//rightGuessString[j]===' ' || rightGuessString[j]==='-')
 		{
 			box.className = "space-box";
 			box.textContent = rightGuessString[j];
@@ -66,6 +65,17 @@ function deleteLetter() {
   box.classList.remove("filled-box");
   currentGuess.pop();
   nextLetter -= 1;
+  
+  
+   if(isSpecialCharacter(rightGuessString[nextLetter])) 
+  {
+	  console.log('delete special one!');
+	  let box = row.children[nextLetter - 1];
+	  box.textContent = "";
+	  box.classList.remove("filled-box");
+	  currentGuess.pop();
+	  nextLetter -= 1;
+  }
 }
 
 function checkGuess() {
@@ -128,7 +138,7 @@ for(let i=0;i<letterColor.length;i++)
   for (let i = 0; i < rightGuessString.length; i++) {
 	  if(isSpecialCharacter(guessString[i])) continue;
     let box = row.children[i];
-    let delay = 250 * i;
+    let delay = 125 * i;
     setTimeout(() => {
       //flip box
       animateCSS(box, "flipInX");
