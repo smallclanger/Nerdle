@@ -26,7 +26,7 @@ form {
   font-size: 2.5rem;
   font-weight: 700;
   height: 3rem;
-  width: 30px;
+  width: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,6 +66,10 @@ form {
 }
 
 .second-row {
+  margin: 0.5rem 0;
+}
+
+.number-row {
   margin: 0.5rem 0;
 }
 

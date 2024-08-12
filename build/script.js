@@ -18,7 +18,8 @@ function initBoard() {
 
     for (let j = 0; j < rightGuessString.length; j++) {
 		let box = document.createElement("div");
-		if(rightGuessString[j]===' ' || rightGuessString[j]==='-')
+		if(isSpecialCharacter(rightGuessString[j]))
+		//rightGuessString[j]===' ' || rightGuessString[j]==='-')
 		{
 			box.className = "space-box";
 			box.textContent = rightGuessString[j];
@@ -32,6 +33,12 @@ function initBoard() {
 
     board.appendChild(row);
   }
+}
+
+function isSpecialCharacter(c)
+{
+	let specialChars = " -'/."
+	return specialChars.includes(c);
 }
 
 function shadeKeyBoard(letter, color) {
@@ -119,7 +126,7 @@ for(let i=0;i<letterColor.length;i++)
 	allGuesses.push(colorBoxes);
 	
   for (let i = 0; i < rightGuessString.length; i++) {
-	  if(guessString[i]===' ' || guessString[i]==='-') continue;
+	  if(isSpecialCharacter(guessString[i])) continue;
     let box = row.children[i];
     let delay = 250 * i;
     setTimeout(() => {
@@ -163,13 +170,13 @@ function showResult(resultText)
 }
 
 function insertLetter(pressedKey) {
-	if(pressedKey.charCodeAt(0)<97 || pressedKey.charCodeAt(0)>122)
+	if(
+	!((pressedKey.charCodeAt(0)>=48 && pressedKey.charCodeAt(0)<=57) ||	(pressedKey.charCodeAt(0)>=97 && pressedKey.charCodeAt(0)<=122))
+	)
 	{
 		console.log('no char');
 		return;
 	}
-	if(pressedKey.toUpperCase() === pressedKey.toLowerCase() )
-		return;
 	
   if (nextLetter === rightGuessString.length) {
     return;
@@ -183,7 +190,7 @@ function insertLetter(pressedKey) {
   box.classList.add("filled-box");
   currentGuess.push(pressedKey);
   nextLetter += 1;
-  if(rightGuessString[nextLetter]===' ' || rightGuessString[nextLetter]==='-') 
+  if(isSpecialCharacter(rightGuessString[nextLetter])) 
   {
 	  currentGuess.push(rightGuessString[nextLetter]);
 	  nextLetter += 1;
@@ -226,7 +233,8 @@ document.addEventListener("keyup", (e) => {
     return;
   }
 
-  let found = pressedKey.match(/[a-z]/gi);
+  let found = pressedKey.match(/[a-z0-9]/gi);
+  console.log(found);
   if (!found || found.length > 1) {
     return;
   } else {
@@ -249,22 +257,6 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
   document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
 
-/*
-document.getElementById("keyboard-cont").addEventListener("touchstart", (e) => {
-  const target = e.target;
-
-  if (!target.classList.contains("keyboard-button")) {
-    return;
-  }
-  let key = target.textContent;
-
-  if (key === "Del") {
-    key = "Backspace";
-  }
-
-  document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
-});
-*/
 
 document.getElementById("myForm").addEventListener("click", (e) => {
   const target = e.target;
