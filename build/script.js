@@ -273,7 +273,7 @@ document.getElementById("myForm").addEventListener("click", (e) => {
     return;
   }
   
-  let textToShare = "Result!=\r\n";
+  let textToShare = "Nerdle Result!"+ allGuesses.length.toString()+"/6\r\n";
   for(let i =0; i<allGuesses.length;i++)
   {
 	  for(let l=0;l<allGuesses[i].length;l++)

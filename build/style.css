@@ -15,7 +15,8 @@ form {
 #game-board {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column;  
+  width:100%;
 }
 
 .letter-box {
@@ -25,7 +26,7 @@ form {
   font-size: 2.5rem;
   font-weight: 700;
   height: 3rem;
-  width: 3rem;
+  width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +39,7 @@ form {
   font-size: 2.5rem;
   font-weight: 700;
   height: 3rem;
-  width: 3rem;
+  width: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
