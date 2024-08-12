@@ -106,6 +106,18 @@ var letterColor =[];
     }
   }
 
+let colorBoxes = [];
+for(let i=0;i<letterColor.length;i++)
+{
+	if(letterColor[i]==="green")
+		colorBoxes.push("🟩");
+	else 	if(letterColor[i]==="yellow")
+		colorBoxes.push("🟨");
+	else 
+		colorBoxes.push("⬛");
+}
+	allGuesses.push(colorBoxes);
+	
   for (let i = 0; i < rightGuessString.length; i++) {
 	  if(guessString[i]===' ' || guessString[i]==='-') continue;
     let box = row.children[i];
@@ -119,11 +131,13 @@ var letterColor =[];
     }, delay);
   }
 
-	allGuesses.push(letterColor);
-	document.getElementById("myForm").style.display = "block";
 
   if (guessString === rightGuessString) {
+	
+	showResult("You guessed right! Game over!");
+	  
     toastr.success("You guessed right! Game over!");
+	
     guessesRemaining = 0;
     return;
   } else {
@@ -132,10 +146,20 @@ var letterColor =[];
     nextLetter = 0;
 
     if (guessesRemaining === 0) {
+		showResult("You've run out of guesses! Game over!" + `The right word was: "${rightGuessString}"`);
+
       toastr.error("You've run out of guesses! Game over!");
       toastr.info(`The right word was: "${rightGuessString}"`);
+	 	  
     }
   }
+}
+
+function showResult(resultText)
+{
+	 let labelElement = document.getElementById("resultLabel");
+	 document.getElementById("myForm").style.display = "block";
+	 labelElement.innerText = resultText;
 }
 
 function insertLetter(pressedKey) {
@@ -249,12 +273,24 @@ document.getElementById("myForm").addEventListener("click", (e) => {
     return;
   }
   
+  let textToShare = "Result!=\r\n";
+  for(let i =0; i<allGuesses.length;i++)
+  {
+	  for(let l=0;l<allGuesses[i].length;l++)
+	  {
+		  textToShare = textToShare +allGuesses[i][l];
+	  }
+	  textToShare = textToShare +"\r\n";
+  }
+  
+  console.log(textToShare);
+  
+  
   
     if (navigator.share) {
     navigator.share({
-		text: 'test 123',
-      title: 'WebShare API Demo',
-      url: 'https://bbc.co.uk'
+		text: textToShare,
+      title: 'Nerdle result',
     }).then(() => {
       console.log('Thanks for sharing!');
     })
