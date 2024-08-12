@@ -120,6 +120,7 @@ var letterColor =[];
   }
 
 	allGuesses.push(letterColor);
+	document.getElementById("myForm").style.display = "block";
 
   if (guessString === rightGuessString) {
     toastr.success("You guessed right! Game over!");
