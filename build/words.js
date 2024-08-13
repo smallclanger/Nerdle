@@ -769,4 +769,6 @@ export const WORDS = [
 	'rose tico',
 	'jannah',
 	'babu frik',
+	'beskar',
+	'cobb vanth',
 ]

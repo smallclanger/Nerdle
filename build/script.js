@@ -62,7 +62,7 @@ function shadeKeyBoard(letter, color) {
         return;
       }
 
-      if (oldColor === "yellow" && color !== "green") {
+      if (oldColor === "orange" && color !== "green") {
         return;
       }
 
@@ -131,7 +131,7 @@ var letterColor =[];
     //checking right letters
     for (let j = 0; j < rightGuessString.length; j++) {
       if (rightGuess[j] == currentGuess[i]) {
-        letterColor[i] = "yellow";
+        letterColor[i] = "orange";
         rightGuess[j] = "#";
       }
     }
@@ -142,7 +142,7 @@ for(let i=0;i<letterColor.length;i++)
 {
 	if(letterColor[i]==="green")
 		colorBoxes.push("🟩");
-	else 	if(letterColor[i]==="yellow")
+	else 	if(letterColor[i]==="orange")
 		colorBoxes.push("🟨");
 	else 
 		colorBoxes.push("⬛");
@@ -210,6 +210,7 @@ function insertLetter(pressedKey) {
   let box = row.children[nextLetter];
   animateCSS(box, "pulse");
   box.textContent = pressedKey;
+  //box.color="white";
   box.classList.add("filled-box");
   currentGuess.push(pressedKey);
   nextLetter += 1;
