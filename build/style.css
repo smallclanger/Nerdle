@@ -53,7 +53,7 @@ form {
   font-weight: 700;
   height: 3rem;
   width: 1rem;
-  display: flex;
+  display: table-cell;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
