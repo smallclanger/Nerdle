@@ -39,7 +39,7 @@ form {
   align-items: center;
   text-transform: uppercase;
   vertical-align: middle;
-  color:white
+  color:white;
 }
 
 .letter-box:last-child {
@@ -62,7 +62,7 @@ form {
 
 .filled-box {
   border: 2px solid gray;
-  color:black
+  color:black;
 }
 
 .letter-row {
