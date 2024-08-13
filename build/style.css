@@ -13,9 +13,15 @@ form {
 }
 
 #game-board {
-  display: flex;
+  border: 2px solid gray;
+  border-radius: 3px;
+
+  display: table;
+  table-layout:auto
   align-items: center;
   flex-direction: column;  
+  justify-content: center;   
+  border-color: green;
   width:100%;
 }
 
@@ -23,15 +29,22 @@ form {
   border: 2px solid gray;
   border-radius: 3px;
   margin: 2px;
-  font-size: 2.5rem;
-  font-weight: 700;
-  height: 3rem;
+  text-align:center;
+    font-family: SceletAF, Helvetica, sans-serif;
+  font-size: 5cqw;
+  height: 2rem;
   width: 3rem;
-  display: flex;
+  display: table-cell;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  vertical-align: middle;
 }
+
+.letter-box:last-child {
+  margin-right: 0px;
+}
+
 
 .space-box {
   border-width: 0;
@@ -51,7 +64,7 @@ form {
 }
 
 .letter-row {
-  display: flex;
+  display: table-row;  
 }
 
 #keyboard-cont {
@@ -74,6 +87,7 @@ form {
 }
 
 .keyboard-button {
+	font-family: SceletAF, Helvetica, sans-serif;
   font-size: 1rem;
   font-weight: 700;
   padding: 0.5rem;
@@ -93,10 +107,12 @@ form {
   justify-content: center; 
   position:fixed;
   top:calc(25% - 200px);
-  left:calc(50% - 250px);
-  width:500px;
-  height:800px:
+  left:calc(50% - 200px);
+  width:400px;
+  
+  height:1000px:
   z-index:99999;
+  
 }
 
 .shareButtonContainer{
@@ -106,7 +122,8 @@ form {
 
 .share-btn {
   display: block;
-  max-width: 300px;
+  width: 300px;
+  height: 40px;
   margin: auto;
 }
 

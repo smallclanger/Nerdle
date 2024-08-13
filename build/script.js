@@ -7,9 +7,21 @@ let nextLetter = 0;
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 let allGuesses = [];
 
+var now = new Date();
+var fullDaysSinceEpoch = Math.floor(now/8.64e7);
+
+let indexForTodaysWord = fullDaysSinceEpoch % WORDS.length;
+console.log("day="+fullDaysSinceEpoch.toString()+" index="+indexForTodaysWord.toString());
+rightGuessString = WORDS[indexForTodaysWord];
 console.log(rightGuessString);
+let succeeded = false;
 
 function initBoard() {
+		 let labelElement = document.getElementById("game-number");
+	 
+	 labelElement.innerText = "Game: " + indexForTodaysWord.toString();
+
+	
   let board = document.getElementById("game-board");
 
   for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
@@ -150,7 +162,7 @@ for(let i=0;i<letterColor.length;i++)
 
 
   if (guessString === rightGuessString) {
-	
+	succeeded=true;
 	showResult("You guessed right! Game over!");
 	  
     toastr.success("You guessed right! Game over!");
@@ -180,9 +192,7 @@ function showResult(resultText)
 }
 
 function insertLetter(pressedKey) {
-	if(
-	!((pressedKey.charCodeAt(0)>=48 && pressedKey.charCodeAt(0)<=57) ||	(pressedKey.charCodeAt(0)>=97 && pressedKey.charCodeAt(0)<=122))
-	)
+	if(	!((pressedKey.charCodeAt(0)>=48 && pressedKey.charCodeAt(0)<=57) ||	(pressedKey.charCodeAt(0)>=97 && pressedKey.charCodeAt(0)<=122))	)
 	{
 		console.log('no char');
 		return;
@@ -191,6 +201,7 @@ function insertLetter(pressedKey) {
   if (nextLetter === rightGuessString.length) {
     return;
   }
+  
   pressedKey = pressedKey.toLowerCase();
 
   let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
@@ -275,7 +286,9 @@ document.getElementById("myForm").addEventListener("click", (e) => {
     return;
   }
   
-  let textToShare = "Nerdle Result!"+ allGuesses.length.toString()+"/6\r\n";
+  let textToShare = "Nerdle "+indexForTodaysWord.toString();
+  if( succeeded) textToShare = textToShare+" "+  allGuesses.length.toString()+"/6\r\n";
+  else textToShare = textToShare+" X/6\r\n";
   for(let i =0; i<allGuesses.length;i++)
   {
 	  for(let l=0;l<allGuesses[i].length;l++)
@@ -286,8 +299,6 @@ document.getElementById("myForm").addEventListener("click", (e) => {
   }
   
   console.log(textToShare);
-  
-  
   
     if (navigator.share) {
     navigator.share({
