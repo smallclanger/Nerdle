@@ -231,11 +231,9 @@ function insertLetter(pressedKey) {
 
 function storeSession()
 {
-	localStorage.setItem("val_currentGuess", currentGuess);
-    localStorage.setItem("val_allGuesses", JSON.stringify(allGuesses));
-	localStorage.setItem("val_guessesRemaining", guessesRemaining);
-    localStorage.setItem("val_nextLetter", nextLetter);
     localStorage.setItem("val_allWordGuesses", JSON.stringify(allWordGuesses));
+    localStorage.setItem("val_indexForTodaysWord", JSON.stringify(indexForTodaysWord));
+    
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
@@ -335,13 +333,9 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function() {
-  
-	//currentGuess = localStorage.getItem("val_currentGuess");
- //   allGuesses = JSON.parse(localStorage.getItem("val_allGuesses"));
-	//guessesRemaining = localStorage.getItem("val_guessesRemaining");
-   // nextLetter = localStorage.getItem("val_nextLetter");
+    let dayIndex = localStorage.getItem("val_indexForTodaysWord");
     allWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
-	if(currentGuess===null)
+    if (currentGuess === null || dayIndex != indexForTodaysWord)
 	{
 		console.log("resetting guess");
 		currentGuess = [];
@@ -349,7 +343,6 @@ window.onload = function() {
 		nextLetter = 0;
 		allGuesses = [];
         allWordGuesses = [];
-        
 	}
 	else
     {
