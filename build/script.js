@@ -8,19 +8,16 @@ let rightGuessString = "";
 let allGuesses = [];
 let allWordGuesses = [];
 var now = new Date();
-var fullDaysSinceEpoch = Math.floor(now/8.64e7);
+var fullDaysSinceEpoch = Math.floor(now / 8.64e7);
 
 let indexForTodaysWord = fullDaysSinceEpoch % WORDS.length;
-console.log("day="+fullDaysSinceEpoch.toString()+" index="+indexForTodaysWord.toString());
+console.log("day=" + fullDaysSinceEpoch.toString() + " index=" + indexForTodaysWord.toString());
 rightGuessString = WORDS[indexForTodaysWord];
 console.log(rightGuessString);
 let succeeded = false;
 
 function initBoard() {
-
-    let labelElement = document.getElementById("game-number");
-
-    labelElement.innerText = "Game: " + indexForTodaysWord.toString();
+    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString();
 
     let board = document.getElementById("game-board");
 
@@ -37,7 +34,6 @@ function initBoard() {
             else
                 box.className = "letter-box";
 
-
             row.appendChild(box);
         }
 
@@ -45,51 +41,48 @@ function initBoard() {
     }
 }
 
-function isSpecialCharacter(c)
-{
-	let specialChars = " -'/."
-	return specialChars.includes(c);
+function isSpecialCharacter(c) {
+    return " -'/.".includes(c);
 }
 
 function shadeKeyBoard(letter, color) {
-  for (const elem of document.getElementsByClassName("keyboard-button")) {
-    if (elem.textContent === letter) {
-		if(color==="green" ||  color ==="gray")
-			elem.style.color="white";
-      let oldColor = elem.style.backgroundColor;
-      if (oldColor === "green") {
-        return;
-      }
+    for (const elem of document.getElementsByClassName("keyboard-button")) {
+        if (elem.textContent === letter) {
+            if (color === "green" || color === "gray")
+                elem.style.color = "white";
+            let oldColor = elem.style.backgroundColor;
+            if (oldColor === "green") {
+                return;
+            }
 
-      if (oldColor === "orange" && color !== "green") {
-        return;
-      }
+            if (oldColor === "orange" && color !== "green") {
+                return;
+            }
 
-      elem.style.backgroundColor = color;
-      break;
+            elem.style.backgroundColor = color;
+            break;
+        }
     }
-  }
 }
 
 function deleteLetter() {
-  let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
-  let box = row.children[nextLetter - 1];
-  box.textContent = "";
-  box.classList.remove("filled-box");
-  currentGuess.pop();
-  nextLetter -= 1;
-  
-  
-   if(isSpecialCharacter(rightGuessString[nextLetter])) 
-  {
-	  console.log('delete special one!');
-	  let box = row.children[nextLetter - 1];
-	  box.textContent = "";
-	  box.classList.remove("filled-box");
-	  currentGuess.pop();
-	  nextLetter -= 1;
-  }
+    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+    let box = row.children[nextLetter - 1];
+    box.textContent = "";
+    box.classList.remove("filled-box");
+    currentGuess.pop();
+    nextLetter -= 1;
+
+    if (isSpecialCharacter(rightGuessString[nextLetter])) {
+        console.log('delete special one!');
+        let box = row.children[nextLetter - 1];
+        box.textContent = "";
+        box.classList.remove("filled-box");
+        currentGuess.pop();
+        nextLetter -= 1;
+    }
 }
+
 // change to check guess (index)
 function checkGuess(rowIndex) {
     let row = document.getElementsByClassName("letter-row")[rowIndex];
@@ -111,15 +104,12 @@ function checkGuess(rowIndex) {
     }*/
 
     allWordGuesses.push(guessString);
-    console.log("added [" + guessString + "] to array. Length now=" + allWordGuesses.length);
-    console.log("words=" + allWordGuesses.length.toString());
-    for (let i = 0; i < allWordGuesses.length; i++) {
-        console.log(allWordGuesses[i]);
-    }
+
     var letterColor = [];
     for (let lc = 0; lc < rightGuessString.length; lc++)
         letterColor.push("gray");
-    //check green
+
+    // check green
     for (let i = 0; i < rightGuessString.length; i++) {
         if (rightGuess[i] == currentGuess[i]) {
             letterColor[i] = "green";
@@ -187,16 +177,13 @@ function checkGuess(rowIndex) {
 
             toastr.error("You've run out of guesses! Game over!");
             toastr.info(`The right word was: "${rightGuessString}"`);
-
         }
     }
 }
 
-function showResult(resultText)
-{
-	 let labelElement = document.getElementById("resultLabel");
-	 document.getElementById("myForm").style.display = "block";
-	 labelElement.innerText = resultText;
+function showResult(resultText) {
+    document.getElementById("resultLabel").innerText = resultText;
+    document.getElementById("myForm").style.display = "block";
 }
 
 function insertLetter(pressedKey) {
@@ -206,7 +193,7 @@ function insertLetter(pressedKey) {
     }
 
     if (nextLetter === rightGuessString.length) {
-        console.log("hit end of length of [" + rightGuessString+"] nextLetter="+nextLetter.toString());
+        console.log("hit end of length of [" + rightGuessString + "] nextLetter=" + nextLetter.toString());
         return;
     }
 
@@ -229,151 +216,124 @@ function insertLetter(pressedKey) {
     storeSession();
 }
 
-function storeSession()
-{
+function storeSession() {
     localStorage.setItem("val_allWordGuesses", JSON.stringify(allWordGuesses));
     localStorage.setItem("val_indexForTodaysWord", JSON.stringify(indexForTodaysWord));
-    
+
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
-  // We create a Promise and return it
-  new Promise((resolve, reject) => {
-    const animationName = `${prefix}${animation}`;
-    // const node = document.querySelector(element);
-    const node = element;
-    node.style.setProperty("--animate-duration", "0.3s");
+    // We create a Promise and return it
+    new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`;
+        // const node = document.querySelector(element);
+        const node = element;
+        node.style.setProperty("--animate-duration", "0.3s");
 
-    node.classList.add(`${prefix}animated`, animationName);
+        node.classList.add(`${prefix}animated`, animationName);
 
-    // When the animation ends, we clean the classes and resolve the Promise
-    function handleAnimationEnd(event) {
-      event.stopPropagation();
-      node.classList.remove(`${prefix}animated`, animationName);
-      resolve("Animation ended");
-    }
+        // When the animation ends, we clean the classes and resolve the Promise
+        function handleAnimationEnd(event) {
+            event.stopPropagation();
+            node.classList.remove(`${prefix}animated`, animationName);
+            resolve("Animation ended");
+        }
 
-    node.addEventListener("animationend", handleAnimationEnd, { once: true });
-  });
+        node.addEventListener("animationend", handleAnimationEnd, { once: true });
+    });
 
 document.addEventListener("keyup", (e) => {
-  if (guessesRemaining === 0) {
-    return;
-  }
+    if (guessesRemaining === 0) {
+        return;
+    }
 
-  let pressedKey = String(e.key);
-  if (pressedKey === "Backspace" && nextLetter !== 0) {
-    deleteLetter();
-    return;
-  }
+    let pressedKey = String(e.key);
+    if (pressedKey === "Backspace" && nextLetter !== 0) {
+        deleteLetter();
+        return;
+    }
 
-  if (pressedKey === "Enter") {
-      checkGuess(NUMBER_OF_GUESSES - guessesRemaining);
-    return;
-  }
+    if (pressedKey === "Enter") {
+        checkGuess(NUMBER_OF_GUESSES - guessesRemaining);
+        return;
+    }
 
-  let found = pressedKey.match(/[a-z0-9]/gi);
-  console.log(found);
-  if (!found || found.length > 1) {
-    return;
-  } else {
-    insertLetter(pressedKey);
-  }
+    let found = pressedKey.match(/[a-z0-9]/gi);
+    console.log(found);
+    if (!found || found.length > 1) {
+        return;
+    } else {
+        insertLetter(pressedKey);
+    }
 });
 
 document.getElementById("keyboard-cont").addEventListener("click", (e) => {
-  const target = e.target;
+    const target = e.target;
 
-  if (!target.classList.contains("keyboard-button")) {
-    return;
-  }
-  let key = target.textContent;
+    if (!target.classList.contains("keyboard-button")) {
+        return;
+    }
+    let key = target.textContent;
 
-  if (key === "Del") {
-    key = "Backspace";
-  }
+    if (key === "Del") {
+        key = "Backspace";
+    }
 
-  document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
+    document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
 });
-
 
 document.getElementById("myForm").addEventListener("click", (e) => {
-  const target = e.target;
+    const target = e.target;
 
-  if (!target.classList.contains("share-btn")) {
-    return;
-  }
-  
-  let textToShare = "Nerdle "+indexForTodaysWord.toString();
-  if( succeeded) textToShare = textToShare+" "+  allGuesses.length.toString()+"/6\r\n";
-  else textToShare = textToShare+" X/6\r\n";
-  for(let i =0; i<allGuesses.length;i++)
-  {
-	  for(let l=0;l<allGuesses[i].length;l++)
-	  {
-		  textToShare = textToShare +allGuesses[i][l];
-	  }
-	  textToShare = textToShare +"\r\n";
-  }
-  
-  console.log(textToShare);
-  
+    if (!target.classList.contains("share-btn")) {
+        return;
+    }
+
+    let textToShare = "Nerdle " + indexForTodaysWord.toString();
+    if (succeeded) textToShare = textToShare + " " + allGuesses.length.toString() + "/6\r\n";
+    else textToShare = textToShare + " X/6\r\n";
+    for (let i = 0; i < allGuesses.length; i++) {
+        for (let l = 0; l < allGuesses[i].length; l++) {
+            textToShare = textToShare + allGuesses[i][l];
+        }
+        textToShare = textToShare + "\r\n";
+    }
+
+    console.log(textToShare);
+
     if (navigator.share) {
-    navigator.share({
-		text: textToShare,
-      title: 'Nerdle result',
-    }).then(() => {
-      console.log('Thanks for sharing!');
-    })
-    .catch(console.error);
-  } else {
-    // fallback
-  }
-  
+        navigator.share({
+            text: textToShare,
+            title: 'Nerdle result',
+        }).then(() => {
+            console.log('Thanks for sharing!');
+        })
+            .catch(console.error);
+    } else {
+        // fallback
+    }
+
 });
 
-window.onload = function() {
-    let dayIndex = localStorage.getItem("val_indexForTodaysWord");
-    allWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
-    if (currentGuess === null || dayIndex != indexForTodaysWord)
-	{
-		console.log("resetting guess");
-		currentGuess = [];
-		guessesRemaining = NUMBER_OF_GUESSES;
-		nextLetter = 0;
-		allGuesses = [];
-        allWordGuesses = [];
-	}
-	else
-    {
-        allGuesses = [];
-        guessesRemaining = NUMBER_OF_GUESSES;
-        let tempWordGuesses = allWordGuesses;
-        allWordGuesses = [];
-        console.log("words=" + tempWordGuesses.length.toString());
+window.onload = function () {
+    let tempWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
+    if (tempWordGuesses === null || localStorage.getItem("val_indexForTodaysWord") != indexForTodaysWord) {
+        console.log("resetting guess");
+    }
+    else {
         for (let i = 0; i < tempWordGuesses.length; i++) {
             let row = document.getElementsByClassName("letter-row")[i];
             currentGuess = tempWordGuesses[i];
-            
             for (let l = 0; l < tempWordGuesses[i].length; l++) {
                 let box = row.children[l];
                 animateCSS(box, "pulse");
                 box.textContent = tempWordGuesses[i][l];
+                box.classList.add("filled-box");
+            }
 
-               box.classList.add("filled-box");
-                
-            }
             checkGuess(NUMBER_OF_GUESSES - guessesRemaining);
-        
-            }
-		// paint lines
-		
-		//show letters current guess
-	}
-    console.log("currentguess=" + currentGuess.length.toString());
-    console.log("nextLetter=" + nextLetter);
-    console.log("guessesRemaining=" + guessesRemaining);
-    // ...
+        }
+    }
 }
 
 initBoard();
