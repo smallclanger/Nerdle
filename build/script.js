@@ -17,7 +17,7 @@ console.log(rightGuessString);
 let succeeded = false;
 
 function initBoard() {
-    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString();
+    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString();
 
     let board = document.getElementById("game-board");
 
@@ -66,13 +66,14 @@ function shadeKeyBoard(letter, color) {
 }
 
 function deleteLetter() {
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+    let row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
     let box = row.children[nextLetter - 1];
     box.textContent = "";
     box.classList.remove("filled-box");
     currentGuess.pop();
     nextLetter -= 1;
 
+    // this only handles single special characters - if there were two together we would need to make this a loop
     if (isSpecialCharacter(rightGuessString[nextLetter])) {
         console.log('delete special one!');
         let box = row.children[nextLetter - 1];
@@ -122,7 +123,7 @@ function checkGuess(rowIndex) {
     for (let i = 0; i < rightGuessString.length; i++) {
         if (letterColor[i] == "green") continue;
 
-        //checking right letters
+        // checking right letters
         for (let j = 0; j < rightGuessString.length; j++) {
             if (rightGuess[j] == currentGuess[i]) {
                 letterColor[i] = "orange";
@@ -131,6 +132,7 @@ function checkGuess(rowIndex) {
         }
     }
 
+    // Build colour boxes for share data
     let colorBoxes = [];
     for (let i = 0; i < letterColor.length; i++) {
         if (letterColor[i] === "green")
@@ -188,7 +190,7 @@ function showResult(resultText) {
 
 function insertLetter(pressedKey) {
     if (!((pressedKey.charCodeAt(0) >= 48 && pressedKey.charCodeAt(0) <= 57) || (pressedKey.charCodeAt(0) >= 97 && pressedKey.charCodeAt(0) <= 122))) {
-        console.log('no char');
+        console.log('not valid character');
         return;
     }
 
@@ -219,7 +221,6 @@ function insertLetter(pressedKey) {
 function storeSession() {
     localStorage.setItem("val_allWordGuesses", JSON.stringify(allWordGuesses));
     localStorage.setItem("val_indexForTodaysWord", JSON.stringify(indexForTodaysWord));
-
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
@@ -290,12 +291,13 @@ document.getElementById("myForm").addEventListener("click", (e) => {
     }
 
     let textToShare = "Nerdle " + indexForTodaysWord.toString();
-    if (succeeded) textToShare = textToShare + " " + allGuesses.length.toString() + "/6\r\n";
-    else textToShare = textToShare + " X/6\r\n";
+    if (succeeded) textToShare = textToShare + " " + allGuesses.length.toString() + "/"+NUMBER_OF_GUESSES+"\r\n";
+    else textToShare = textToShare + " X/"+NUMBER_OF_GUESSES+"\r\n";
     for (let i = 0; i < allGuesses.length; i++) {
         for (let l = 0; l < allGuesses[i].length; l++) {
             textToShare = textToShare + allGuesses[i][l];
         }
+
         textToShare = textToShare + "\r\n";
     }
 
