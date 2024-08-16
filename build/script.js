@@ -16,8 +16,11 @@ rightGuessString = WORDS[indexForTodaysWord];
 console.log(rightGuessString);
 let succeeded = false;
 
+let currentStreak = 0;
+let lastSuccessDay = 0;
+
 function initBoard() {
-    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString();
+   // (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString();
 
     let board = document.getElementById("game-board");
 
@@ -160,11 +163,18 @@ function checkGuess(rowIndex) {
 
     if (guessString === rightGuessString) {
         succeeded = true;
-        showResult("You guessed right! Game over!");
-
-        toastr.success("You guessed right! Game over!");
-
+        
         guessesRemaining = 0;
+        
+        if(lastSuccessDay != indexForTodaysWord )
+        {
+          // increase streak
+          currentStreak++;
+          lastSuccessDay = indexForTodaysWord;
+        }
+
+        showResult("You guessed right! Game over! Current streak:"+currentStreak.toString());        
+
         storeSession();
 
         return;
@@ -172,14 +182,14 @@ function checkGuess(rowIndex) {
         guessesRemaining -= 1;
         currentGuess = [];
         nextLetter = 0;
-        storeSession();
 
         if (guessesRemaining === 0) {
+          currentStreak=0;          
+      
             showResult("You've run out of guesses! Game over!" + `The right word was: "${rightGuessString}"`);
-
-            toastr.error("You've run out of guesses! Game over!");
-            toastr.info(`The right word was: "${rightGuessString}"`);
         }
+
+        storeSession();
     }
 }
 
@@ -221,6 +231,9 @@ function insertLetter(pressedKey) {
 function storeSession() {
     localStorage.setItem("val_allWordGuesses", JSON.stringify(allWordGuesses));
     localStorage.setItem("val_indexForTodaysWord", JSON.stringify(indexForTodaysWord));
+
+    localStorage.setItem("val_currentStreak", JSON.stringify(currentStreak));
+    localStorage.setItem("val_lastSuccessDay", JSON.stringify(lastSuccessDay));
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
@@ -319,6 +332,12 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 
 window.onload = function () {
     let tempWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
+    currentStreak = JSON.parse(localStorage.getItem("val_currentStreak",));
+    lastSuccessDay = JSON.parse(localStorage.getItem("val_lastSuccessDay"));
+
+    if(currentStreak===null) currentStreak=0;
+    if(lastSuccessDay===null) lastSuccessDay=0;
+
     if (tempWordGuesses === null || localStorage.getItem("val_indexForTodaysWord") != indexForTodaysWord) {
         console.log("resetting guess");
     }
@@ -336,6 +355,8 @@ window.onload = function () {
             checkGuess(NUMBER_OF_GUESSES - guessesRemaining);
         }
     }
+
+    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString();
 }
 
 initBoard();
