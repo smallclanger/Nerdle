@@ -24,20 +24,18 @@ form {
 }
 
 #game-board {
-  border: 2px solid gray;
-  border-radius: 3px;
-
+  
   display: table;
-  table-layout:auto
+  table-layout:auto;
   align-items: center;
   flex-direction: column;  
   justify-content: center;   
-  border-color: green;
+  
   width:100%;
 }
 
 .letter-box {
-  border: 1px solid gray;
+  border: 1px solid rgb(128, 128, 128);
   border-radius: 3px;
   margin: 2px;
   text-align:center;  
@@ -59,7 +57,7 @@ form {
 
 
 .space-box {
-  border-width: 0;
+  border:hidden;
   margin: 2px;
   text-align:center;  
   font-family: SceletAF, Helvetica, sans-serif;
@@ -70,12 +68,16 @@ form {
   display: table-cell;
   justify-content: center;
   align-items: center;
-  color:white;
+  color:rgb(255, 255, 255);
 }
 
 .filled-box {
   border: 2px solid gray;
   color:white
+}
+
+.space-box.filled-box {
+  border:hidden;
 }
 
 .letter-row {
@@ -126,10 +128,7 @@ form {
   top:calc(25% - 200px);
   left:calc(50% - 200px);
   width:400px;
-  
-  height:1000px:
   z-index:99999;
-  
 }
 
 .shareButtonContainer{

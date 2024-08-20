@@ -297,7 +297,7 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
 document.getElementById("myForm").addEventListener("click", (e) => {
     const target = e.target;
     
-    if (target.classList.contains("close-btn")) {
+    if (target.classList.contains("fa-close")) {
         document.getElementById("myForm").style.display = "none";
         return;
     }
