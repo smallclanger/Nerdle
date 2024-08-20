@@ -340,18 +340,12 @@ window.onload = function () {
 
     if(currentStreak===null) currentStreak=0;
     if(lastSuccessDay===null) lastSuccessDay=0;
-    if(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length-1 ||
-        lastSuccessDay === (indexForTodaysWord-1))
-        {
-        // streak still going        
-        }
-        else 
+    if(!(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length-1) &&
+        indexForTodaysWord-lastSuccessDay>1)
         {
             console.log("Streak ended - not played for at least a day");
             currentStreak=0;
         }
-
-        
 
     if (tempWordGuesses === null || localStorage.getItem("val_indexForTodaysWord") != indexForTodaysWord) {
         console.log("resetting guess");
