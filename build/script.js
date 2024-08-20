@@ -20,8 +20,6 @@ let currentStreak = 0;
 let lastSuccessDay = 0;
 
 function initBoard() {
-   // (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString();
-
     let board = document.getElementById("game-board");
 
     for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
@@ -298,6 +296,11 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
 
 document.getElementById("myForm").addEventListener("click", (e) => {
     const target = e.target;
+    
+    if (target.classList.contains("close-btn")) {
+        document.getElementById("myForm").style.display = "none";
+        return;
+    }
 
     if (!target.classList.contains("share-btn")) {
         return;
@@ -337,6 +340,18 @@ window.onload = function () {
 
     if(currentStreak===null) currentStreak=0;
     if(lastSuccessDay===null) lastSuccessDay=0;
+    if(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length-1 ||
+        lastSuccessDay === (indexForTodaysWord-1))
+        {
+        // streak still going        
+        }
+        else 
+        {
+            console.log("Streak ended - not played for at least a day");
+            currentStreak=0;
+        }
+
+        
 
     if (tempWordGuesses === null || localStorage.getItem("val_indexForTodaysWord") != indexForTodaysWord) {
         console.log("resetting guess");
