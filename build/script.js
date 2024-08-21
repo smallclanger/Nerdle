@@ -9,9 +9,10 @@ let allGuesses = [];
 let allWordGuesses = [];
 var now = new Date();
 var fullDaysSinceEpoch = Math.floor(now / 8.64e7);
-
-let indexForTodaysWord = fullDaysSinceEpoch % WORDS.length;
-console.log("day=" + fullDaysSinceEpoch.toString() + " index=" + indexForTodaysWord.toString());
+var day0forGame = 19956;
+var daySinceGameStart = fullDaysSinceEpoch -day0forGame;
+let indexForTodaysWord = daySinceGameStart % WORDS.length;
+console.log("day=" + daySinceGameStart.toString() + " index=" + indexForTodaysWord.toString());
 rightGuessString = WORDS[indexForTodaysWord];
 console.log(rightGuessString);
 let succeeded = false;
