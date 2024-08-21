@@ -171,7 +171,7 @@ function checkGuess(rowIndex) {
           lastSuccessDay = indexForTodaysWord;
         }
 
-        showResult("You guessed right! Game over! Current streak:"+currentStreak.toString());        
+        showResult(rightGuessString);        
 
         storeSession();
 
@@ -184,16 +184,28 @@ function checkGuess(rowIndex) {
         if (guessesRemaining === 0) {
           currentStreak=0;          
       
-            showResult("You've run out of guesses! Game over!" + `The right word was: "${rightGuessString}"`);
+            showResult(rightGuessString);                
         }
 
         storeSession();
     }
 }
 
-function showResult(resultText) {
-    document.getElementById("resultLabel").innerText = resultText;
-    document.getElementById("myForm").style.display = "block";
+function showResult(correctWord) {
+    if(succeeded)
+    {
+        document.getElementById("myForm").style.backgroundColor = 'rgb(112, 216, 91)'; 
+        
+        document.getElementById("resultLabel").innerText = "You guessed right! Game over! Current streak:"+currentStreak.toString();        
+    }
+    else
+    {
+        document.getElementById("myForm").style.backgroundColor = 'rgb(247, 47, 40)'; 
+        document.getElementById("resultLabel").innerText = "You've run out of guesses! Game over!";
+    }
+
+    document.getElementById("correctWord").innerText = correctWord;
+    document.getElementById("myForm").style.display = "grid";
 }
 
 function insertLetter(pressedKey) {

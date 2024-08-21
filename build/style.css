@@ -119,13 +119,12 @@ form {
 .form-popup {
 	display:none;
   border: 3px solid #f1f1f1;
-  z-index: 1;
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgb(236, 200, 40); /* Black w/ opacity */
+  background-color: rgb(236, 200, 40);   
+  
   align-items: center;
   justify-content: center; 
   position:fixed;
-  top:calc(25% - 200px);
+  top:calc(25% - 150px);
   left:calc(50% - 200px);
   width:400px;
   z-index:99999;
@@ -135,6 +134,7 @@ form {
 	display:grid;
   align-items: center;
   justify-content: center; 
+  text-align: center;
 }
 
 .closeButtonContainer
@@ -142,7 +142,7 @@ form {
   display:grid;
   align-items: right;
   justify-content: right; 
-  margin:10px;
+  margin:1px;
 }
 
 .share-btn {
@@ -150,4 +150,8 @@ form {
   width: 300px;
   height: 40px;
   margin: auto;
+}
+
+.correctWord {
+  font-size: 2rem; 
 }
