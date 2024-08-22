@@ -86,12 +86,28 @@ function deleteLetter() {
     }
 }
 
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}
+
+function replaceAtIndex(guess,index,replacement)
+{
+    var newGuess =[];
+    for(let i=0;i<guess.length;i++)
+    {
+        if(i==index)
+            newGuess.push(replacement);
+        else newGuess.push(guess[i]);
+    }
+
+    return newGuess;
+}
+
 // change to check guess (index)
 function checkGuess(rowIndex) {
     let row = document.getElementsByClassName("letter-row")[rowIndex];
     let guessString = "";
     let rightGuess = Array.from(rightGuessString);
-
     for (const val of currentGuess) {
         guessString += val;
     }
@@ -114,22 +130,31 @@ function checkGuess(rowIndex) {
 
     // check green
     for (let i = 0; i < rightGuessString.length; i++) {
-        if (rightGuess[i] == currentGuess[i]) {
+        if (rightGuess[i] === currentGuess[i]) {
             letterColor[i] = "green";
             rightGuess[i] = "#";
+            currentGuess = replaceAtIndex(currentGuess,i,"#");
         }
     }
 
     //check yellow
     //checking guess letters
-    for (let i = 0; i < rightGuessString.length; i++) {
-        if (letterColor[i] == "green") continue;
+    for(let guessIndex = 0;guessIndex<currentGuess.length;guessIndex++)
+    {
+        for (let answerIndex = 0; answerIndex < rightGuess.length; answerIndex++) 
+        {
+            if (letterColor[answerIndex] == "green") 
+                continue;
+            if(rightGuess[answerIndex]==='#')
+                continue;
+            if(rightGuess[answerIndex]===currentGuess[guessIndex])
+            {
+                letterColor[guessIndex] = "orange";
+                rightGuess[answerIndex] = "#";
+                
+                currentGuess = replaceAtIndex(currentGuess,guessIndex,"#");
+                continue;
 
-        // checking right letters
-        for (let j = 0; j < rightGuessString.length; j++) {
-            if (rightGuess[j] == currentGuess[i]) {
-                letterColor[i] = "orange";
-                rightGuess[j] = "#";
             }
         }
     }
