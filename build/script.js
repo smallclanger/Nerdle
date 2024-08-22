@@ -145,7 +145,7 @@ function checkGuess(rowIndex) {
         {
             if (letterColor[answerIndex] == "green") 
                 continue;
-            if(rightGuess[answerIndex]==='#')
+            if(rightGuess[answerIndex]==="#")
                 continue;
             if(rightGuess[answerIndex]===currentGuess[guessIndex])
             {
@@ -323,9 +323,12 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
     if (!target.classList.contains("keyboard-button")) {
         return;
     }
+
     let key = target.textContent;
 
-    if (key === "Del") {
+    if(target.id==="del-button")
+    {
+        console.log("delete!");
         key = "Backspace";
     }
 
