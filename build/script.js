@@ -162,12 +162,17 @@ function checkGuess(rowIndex) {
     // Build colour boxes for share data
     let colorBoxes = [];
     for (let i = 0; i < letterColor.length; i++) {
+        if(isSpecialCharacter(rightGuessString[i]))
+            colorBoxes.push(rightGuessString[i]);
+        else
+        {
         if (letterColor[i] === "green")
             colorBoxes.push("🟩");
         else if (letterColor[i] === "orange")
             colorBoxes.push("🟨");
         else
             colorBoxes.push("⬛");
+}
     }
 
     allGuesses.push(colorBoxes);
