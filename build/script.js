@@ -19,6 +19,38 @@ let succeeded = false;
 
 let currentStreak = 0;
 let lastSuccessDay = 0;
+const zeroPad = (num, places) => String(num).padStart(places, '0')
+
+let dates = [
+{ 
+    "specialDate": "06/09",
+    "message" : "Happy Birthday Harvey!"
+},
+{
+    "specialDate": "23/10",
+    "message" : "Happy Birthday Deb!"
+},
+{
+    "specialDate": "27/12",
+    "message" : "Happy Birthday Owen!"
+},
+{
+    "specialDate": "10/02",
+    "message" : "Happy Anniversary Deb!"
+},
+{
+    "specialDate": "07/08",
+    "message" : "Happy Birthday Cole!"
+},
+{
+    "specialDate": "25/12",
+    "message" : "Merry Christmas!"
+},
+{
+    "specialDate": "01/01",
+    "message" : "Happy New Year!"
+}
+];
 
 function initBoard() {
     let board = document.getElementById("game-board");
@@ -409,6 +441,17 @@ window.onload = function () {
 
             checkGuess(NUMBER_OF_GUESSES - guessesRemaining);
         }
+    }
+
+    const d = new Date();
+    let dateString = zeroPad(d.getDate(),2) + "/" +zeroPad(d.getMonth()+1,2);
+    console.log("date="+dateString);
+    let specialDate = dates.find( d => d.specialDate=== dateString);
+    if(!specialDate && d.getDay()==2)
+        specialDate =  { "message": "Happy Bin Night!"};
+    if(specialDate)
+    {
+        (document.getElementById("special-date")).innerText = specialDate.message;
     }
 
     (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString();
