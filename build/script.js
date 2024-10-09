@@ -49,8 +49,24 @@ let dates = [
 {
     "specialDate": "01/01",
     "message" : "Happy New Year!"
+},
+{
+    "specialDate": "04/05",
+    "message" : "Happy Star Wars Day!"
 }
+
 ];
+
+function loadHistory() {
+	let historydiv= document.getElementById("history-list");
+	
+	  let list = document.getElementById("myList");
+        for (let i = 0; i < indexForTodaysWord; ++i) {
+            let li = document.createElement('li');
+            li.innerText = i.toString()+' : '+WORDS[i].toUpperCase();
+            list.appendChild(li);
+        }
+}
 
 function initBoard() {
     let board = document.getElementById("game-board");
@@ -370,6 +386,16 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
     }
 
     document.dispatchEvent(new KeyboardEvent("keyup", { key: key }));
+});
+
+document.getElementById("Options-Row").addEventListener("click", (e) => {
+    const target = e.target;
+	if( target.classList.contains("history-button"))
+	{
+		console.log("show history");
+		loadHistory();
+		return;
+	}
 });
 
 document.getElementById("myForm").addEventListener("click", (e) => {

@@ -55,6 +55,9 @@ form {
   margin-right: 0px;
 }
 
+#history-list {
+  color:rgb(200, 255, 255);
+}
 
 .space-box {
   border:hidden;
