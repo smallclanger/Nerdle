@@ -441,7 +441,11 @@ window.onload = function () {
 	const totalbackgrounds = 9;
 	console.log('background'+((indexForTodaysWord+52) % totalbackgrounds).toString());
 	
+	var urlstring = 'url(images/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)';
+	console.log(urlstring);
+	
 	$('body').css('background-image', 'url(images/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)');
+	
 	
     let tempWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
     currentStreak = JSON.parse(localStorage.getItem("val_currentStreak",));
