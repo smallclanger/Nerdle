@@ -28,7 +28,7 @@ export const WORDS = [
 	'rush clovis',
 	'tey-zuka',
 	'rg-g1',
-	'gaeln erso',
+	'galen erso',
 	'rukh',
 	'roo-roo page',
 	'dantooine',
