@@ -438,6 +438,11 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function () {
+	const totalbackgrounds = 9;
+	console.log('background'+((indexForTodaysWord+52) % totalbackgrounds).toString());
+	
+	$('body').css('background-image', 'url(../images/backgrounds/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)');
+	
     let tempWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
     currentStreak = JSON.parse(localStorage.getItem("val_currentStreak",));
     lastSuccessDay = JSON.parse(localStorage.getItem("val_lastSuccessDay"));
