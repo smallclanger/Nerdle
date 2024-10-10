@@ -61,6 +61,8 @@ function loadHistory() {
 	let historydiv= document.getElementById("history-list");
 	
 	  let list = document.getElementById("myList");
+	  if(list.children.length>0)
+		  return;
         for (let i = 0; i < indexForTodaysWord; ++i) {
             let li = document.createElement('li');
             li.innerText = i.toString()+' : '+WORDS[i].toUpperCase();
@@ -438,7 +440,7 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function () {
-	const totalbackgrounds = 9;
+	const totalbackgrounds = 10;
 	console.log('background'+((indexForTodaysWord+52) % totalbackgrounds).toString());
 	
 	var urlstring = 'url(images/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)';
