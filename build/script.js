@@ -17,6 +17,7 @@ rightGuessString = WORDS[indexForTodaysWord];
 console.log(rightGuessString);
 let succeeded = false;
 
+let highestStreak = 0;
 let currentStreak = 0;
 let lastSuccessDay = 0;
 const zeroPad = (num, places) => String(num).padStart(places, '0')
@@ -63,7 +64,7 @@ function loadHistory() {
 	  let list = document.getElementById("myList");
 	  if(list.children.length>0)
 		  return;
-        for (let i = 0; i < indexForTodaysWord; ++i) {
+        for (let i = indexForTodaysWord-1; i>=0 ; --i) {
             let li = document.createElement('li');
             li.innerText = i.toString()+' : '+WORDS[i].toUpperCase();
             list.appendChild(li);
@@ -249,6 +250,8 @@ function checkGuess(rowIndex) {
         {
           // increase streak
           currentStreak++;
+		  if(currentStreak>highestStreak)
+			  highestStreak = currentStreak;
           lastSuccessDay = indexForTodaysWord;
         }
 
@@ -325,6 +328,8 @@ function storeSession() {
 
     localStorage.setItem("val_currentStreak", JSON.stringify(currentStreak));
     localStorage.setItem("val_lastSuccessDay", JSON.stringify(lastSuccessDay));
+	
+	localStorage.setItem("val_highestStreak", JSON.stringify(highestStreak));
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
@@ -440,7 +445,7 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function () {
-	const totalbackgrounds = 10;
+	const totalbackgrounds = 12; // 0-12
 	console.log('background'+((indexForTodaysWord+52) % totalbackgrounds).toString());
 	
 	var urlstring = 'url(images/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)';
@@ -452,9 +457,10 @@ window.onload = function () {
     let tempWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
     currentStreak = JSON.parse(localStorage.getItem("val_currentStreak",));
     lastSuccessDay = JSON.parse(localStorage.getItem("val_lastSuccessDay"));
-
+	highestStreak = JSON.parse(localStorage.getItem("val_highestStreak",));
     if(currentStreak===null) currentStreak=0;
     if(lastSuccessDay===null) lastSuccessDay=0;
+	if(highestStreak===null) highestStreak= 0;
     if(!(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length-1) &&
         indexForTodaysWord-lastSuccessDay>1)
         {
@@ -491,7 +497,7 @@ window.onload = function () {
         (document.getElementById("special-date")).innerText = specialDate.message;
     }
 
-    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString();
+    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString() + " Best Streak:"+highestStreak.toString();
 }
 
 initBoard();
