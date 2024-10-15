@@ -20,6 +20,8 @@ let succeeded = false;
 let highestStreak = 0;
 let currentStreak = 0;
 let lastSuccessDay = 0;
+let totalWins = 0;
+let totalDaysAttempted = 0;
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 let dates = [
@@ -249,6 +251,8 @@ function checkGuess(rowIndex) {
         if(lastSuccessDay != indexForTodaysWord )
         {
           // increase streak
+		  totalWins++;
+		  totalDaysAttempted++;
           currentStreak++;
 		  if(currentStreak>highestStreak)
 			  highestStreak = currentStreak;
@@ -264,9 +268,12 @@ function checkGuess(rowIndex) {
         guessesRemaining -= 1;
         currentGuess = [];
         nextLetter = 0;
-
+		
+		
         if (guessesRemaining === 0) {
-          currentStreak=0;          
+			
+			totalDaysAttempted++;
+			currentStreak=0;          
       
             showResult(rightGuessString);                
         }
@@ -330,6 +337,9 @@ function storeSession() {
     localStorage.setItem("val_lastSuccessDay", JSON.stringify(lastSuccessDay));
 	
 	localStorage.setItem("val_highestStreak", JSON.stringify(highestStreak));
+	
+	localStorage.setItem("val_totalWins", JSON.stringify(totalWins));
+	localStorage.setItem("val_totalDaysAttempted", JSON.stringify(totalDaysAttempted));
 }
 
 const animateCSS = (element, animation, prefix = "animate__") =>
@@ -407,8 +417,10 @@ document.getElementById("Options-Row").addEventListener("click", (e) => {
 
 document.getElementById("myForm").addEventListener("click", (e) => {
     const target = e.target;
-    
-    if (target.classList.contains("fa-close")) {
+    console.log(target.classList);
+    if (target.classList.contains("fa-close") ||
+    target.classList.contains("close-btn")) {
+        console.log("close!");
         document.getElementById("myForm").style.display = "none";
         return;
     }
@@ -458,9 +470,15 @@ window.onload = function () {
     currentStreak = JSON.parse(localStorage.getItem("val_currentStreak",));
     lastSuccessDay = JSON.parse(localStorage.getItem("val_lastSuccessDay"));
 	highestStreak = JSON.parse(localStorage.getItem("val_highestStreak",));
+	totalWins= JSON.parse(localStorage.getItem("val_totalWins",));
+	totalDaysAttempted= JSON.parse(localStorage.getItem("val_totalDaysAttempted",));
+	
+	if(totalDaysAttempted===null) totalDaysAttempted = 0;
+	if(totalWins===null) totalWins=0;
     if(currentStreak===null) currentStreak=0;
     if(lastSuccessDay===null) lastSuccessDay=0;
 	if(highestStreak===null) highestStreak= 0;
+
     if(!(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length-1) &&
         indexForTodaysWord-lastSuccessDay>1)
         {
@@ -498,6 +516,10 @@ window.onload = function () {
     }
 
     (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString() + " Best Streak:"+highestStreak.toString();
+    let winperc = Math.floor((totalWins - totalDaysAttempted) / (totalDaysAttempted) * 100);
+    if(isNaN(winperc))
+        winperc=0;
+    (document.getElementById("game-stats")).innerText = "Attempts: " + totalDaysAttempted.toString() + "  Wins:"+ totalWins.toString() + " ("+winperc.toString()+"%)";
 }
 
 initBoard();
