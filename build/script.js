@@ -25,38 +25,38 @@ let totalDaysAttempted = 0;
 const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 let dates = [
-{ 
-    "specialDate": "06/09",
-    "message" : "Happy Birthday Harvey!"
-},
-{
-    "specialDate": "23/10",
-    "message" : "Happy Birthday Deb!"
-},
-{
-    "specialDate": "27/12",
-    "message" : "Happy Birthday Owen!"
-},
-{
-    "specialDate": "10/02",
-    "message" : "Happy Anniversary Deb!"
-},
-{
-    "specialDate": "07/08",
-    "message" : "Happy Birthday Cole!"
-},
-{
-    "specialDate": "25/12",
-    "message" : "Merry Christmas!"
-},
-{
-    "specialDate": "01/01",
-    "message" : "Happy New Year!"
-},
-{
-    "specialDate": "04/05",
-    "message" : "Happy Star Wars Day!"
-}
+    {
+        "specialDate": "06/09",
+        "message": "Happy Birthday Harvey!"
+    },
+    {
+        "specialDate": "23/10",
+        "message": "Happy Birthday Deb!"
+    },
+    {
+        "specialDate": "27/12",
+        "message": "Happy Birthday Owen!"
+    },
+    {
+        "specialDate": "10/02",
+        "message": "Happy Anniversary Deb & Stew!"
+    },
+    {
+        "specialDate": "07/08",
+        "message": "Happy Birthday Cole!"
+    },
+    {
+        "specialDate": "25/12",
+        "message": "Merry Christmas!"
+    },
+    {
+        "specialDate": "01/01",
+        "message": "Happy New Year!"
+    },
+    {
+        "specialDate": "04/05",
+        "message": "Happy Star Wars Day!"
+    }
 
 ];
 
@@ -186,26 +186,23 @@ function checkGuess(rowIndex) {
         if (rightGuess[i] === currentGuess[i]) {
             letterColor[i] = "green";
             rightGuess[i] = "#";
-            currentGuess = replaceAtIndex(currentGuess,i,"#");
+            currentGuess = replaceAtIndex(currentGuess, i, "#");
         }
     }
 
     //check yellow
     //checking guess letters
-    for(let guessIndex = 0;guessIndex<currentGuess.length;guessIndex++)
-    {
-        for (let answerIndex = 0; answerIndex < rightGuess.length; answerIndex++) 
-        {
-            if (letterColor[answerIndex] == "green") 
+    for (let guessIndex = 0; guessIndex < currentGuess.length; guessIndex++) {
+        for (let answerIndex = 0; answerIndex < rightGuess.length; answerIndex++) {
+            if (letterColor[answerIndex] == "green")
                 continue;
-            if(rightGuess[answerIndex]==="#")
+            if (rightGuess[answerIndex] === "#")
                 continue;
-            if(rightGuess[answerIndex]===currentGuess[guessIndex])
-            {
+            if (rightGuess[answerIndex] === currentGuess[guessIndex]) {
                 letterColor[guessIndex] = "orange";
                 rightGuess[answerIndex] = "#";
-                
-                currentGuess = replaceAtIndex(currentGuess,guessIndex,"#");
+
+                currentGuess = replaceAtIndex(currentGuess, guessIndex, "#");
                 continue;
 
             }
@@ -215,17 +212,16 @@ function checkGuess(rowIndex) {
     // Build colour boxes for share data
     let colorBoxes = [];
     for (let i = 0; i < letterColor.length; i++) {
-        if(isSpecialCharacter(rightGuessString[i]))
+        if (isSpecialCharacter(rightGuessString[i]))
             colorBoxes.push(rightGuessString[i]);
-        else
-        {
-        if (letterColor[i] === "green")
-            colorBoxes.push("🟩");
-        else if (letterColor[i] === "orange")
-            colorBoxes.push("🟨");
-        else
-            colorBoxes.push("⬛");
-}
+        else {
+            if (letterColor[i] === "green")
+                colorBoxes.push("🟩");
+            else if (letterColor[i] === "orange")
+                colorBoxes.push("🟨");
+            else
+                colorBoxes.push("⬛");
+        }
     }
 
     allGuesses.push(colorBoxes);
@@ -245,21 +241,20 @@ function checkGuess(rowIndex) {
 
     if (guessString === rightGuessString) {
         succeeded = true;
-        
+
         guessesRemaining = 0;
-        
-        if(lastSuccessDay != indexForTodaysWord )
-        {
-          // increase streak
-		  totalWins++;
-		  totalDaysAttempted++;
-          currentStreak++;
-		  if(currentStreak>highestStreak)
-			  highestStreak = currentStreak;
-          lastSuccessDay = indexForTodaysWord;
+
+        if (lastSuccessDay != indexForTodaysWord) {
+            // increase streak
+            totalWins++;
+            totalDaysAttempted++;
+            currentStreak++;
+            if (currentStreak > highestStreak)
+                highestStreak = currentStreak;
+            lastSuccessDay = indexForTodaysWord;
         }
 
-        showResult(rightGuessString);        
+        showResult(rightGuessString);
 
         storeSession();
 
@@ -268,14 +263,14 @@ function checkGuess(rowIndex) {
         guessesRemaining -= 1;
         currentGuess = [];
         nextLetter = 0;
-		
-		
+
+
         if (guessesRemaining === 0) {
-			
-			totalDaysAttempted++;
-			currentStreak=0;          
-      
-            showResult(rightGuessString);                
+
+            totalDaysAttempted++;
+            currentStreak = 0;
+
+            showResult(rightGuessString);
         }
 
         storeSession();
@@ -287,7 +282,7 @@ function showResult(correctWord) {
     {
         document.getElementById("myForm").style.backgroundColor = 'rgb(112, 216, 91)'; 
         
-        document.getElementById("resultLabel").innerText = "You guessed right! Game over! Current streak:"+currentStreak.toString();        
+        document.getElementById("resultLabel").innerText = "You guessed right! Current streak:"+currentStreak.toString();        
     }
     else
     {
@@ -297,6 +292,17 @@ function showResult(correctWord) {
 
     document.getElementById("correctWord").innerText = correctWord;
     document.getElementById("myForm").style.display = "grid";
+
+    updateStats();
+}
+
+function updateStats()
+{
+    let winperc = Math.floor((totalWins ) / (totalDaysAttempted) * 100);
+    console.log("Perc:"+winperc.toString());
+    if (isNaN(winperc))
+        winperc = 0;
+    (document.getElementById("game-stats")).innerText = "Attempts: " + totalDaysAttempted.toString() + "  Wins:" + totalWins.toString() + " (" + winperc.toString() + "%)";
 }
 
 function insertLetter(pressedKey) {
@@ -419,7 +425,7 @@ document.getElementById("myForm").addEventListener("click", (e) => {
     const target = e.target;
     console.log(target.classList);
     if (target.classList.contains("fa-close") ||
-    target.classList.contains("close-btn")) {
+        target.classList.contains("close-btn")) {
         console.log("close!");
         document.getElementById("myForm").style.display = "none";
         return;
@@ -457,34 +463,33 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function () {
-	const totalbackgrounds = 12; // 0-12
-	console.log('background'+((indexForTodaysWord+52) % totalbackgrounds).toString());
-	
-	var urlstring = 'url(images/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)';
-	console.log(urlstring);
-	
-	$('body').css('background-image', 'url(images/background'+(indexForTodaysWord % totalbackgrounds)+'.jpg)');
-	
-	
+    const totalbackgrounds = 19; // 0-19
+    console.log('background' + ((indexForTodaysWord + 52) % totalbackgrounds).toString());
+
+    var urlstring = 'url(images/background' + (indexForTodaysWord % totalbackgrounds) + '.jpg)';
+    console.log(urlstring);
+
+    $('body').css('background-image', 'url(images/background' + (indexForTodaysWord % totalbackgrounds) + '.jpg)');
+
+
     let tempWordGuesses = JSON.parse(localStorage.getItem("val_allWordGuesses"));
     currentStreak = JSON.parse(localStorage.getItem("val_currentStreak",));
     lastSuccessDay = JSON.parse(localStorage.getItem("val_lastSuccessDay"));
-	highestStreak = JSON.parse(localStorage.getItem("val_highestStreak",));
-	totalWins= JSON.parse(localStorage.getItem("val_totalWins",));
-	totalDaysAttempted= JSON.parse(localStorage.getItem("val_totalDaysAttempted",));
-	
-	if(totalDaysAttempted===null) totalDaysAttempted = 0;
-	if(totalWins===null) totalWins=0;
-    if(currentStreak===null) currentStreak=0;
-    if(lastSuccessDay===null) lastSuccessDay=0;
-	if(highestStreak===null) highestStreak= 0;
+    highestStreak = JSON.parse(localStorage.getItem("val_highestStreak",));
+    totalWins = JSON.parse(localStorage.getItem("val_totalWins",));
+    totalDaysAttempted = JSON.parse(localStorage.getItem("val_totalDaysAttempted",));
 
-    if(!(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length-1) &&
-        indexForTodaysWord-lastSuccessDay>1)
-        {
-            console.log("Streak ended - not played for at least a day");
-            currentStreak=0;
-        }
+    if (totalDaysAttempted === null) totalDaysAttempted = 0;
+    if (totalWins === null) totalWins = 0;
+    if (currentStreak === null) currentStreak = 0;
+    if (lastSuccessDay === null) lastSuccessDay = 0;
+    if (highestStreak === null) highestStreak = 0;
+
+    if (!(indexForTodaysWord === 0 && lastSuccessDay === WORDS.length - 1) &&
+        indexForTodaysWord - lastSuccessDay > 1) {
+        console.log("Streak ended - not played for at least a day");
+        currentStreak = 0;
+    }
 
     if (tempWordGuesses === null || localStorage.getItem("val_indexForTodaysWord") != indexForTodaysWord) {
         console.log("resetting guess");
@@ -505,21 +510,17 @@ window.onload = function () {
     }
 
     const d = new Date();
-    let dateString = zeroPad(d.getDate(),2) + "/" +zeroPad(d.getMonth()+1,2);
-    console.log("date="+dateString);
-    let specialDate = dates.find( d => d.specialDate=== dateString);
-    if(!specialDate && d.getDay()==2)
-        specialDate =  { "message": "Happy Bin Night!"};
-    if(specialDate)
-    {
+    let dateString = zeroPad(d.getDate(), 2) + "/" + zeroPad(d.getMonth() + 1, 2);
+    console.log("date=" + dateString);
+    let specialDate = dates.find(d => d.specialDate === dateString);
+    if (!specialDate && d.getDay() == 2)
+        specialDate = { "message": "Happy Bin Night!" };
+    if (specialDate) {
         (document.getElementById("special-date")).innerText = specialDate.message;
     }
 
-    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / "+ WORDS.length.toString() + " Streak:"+ currentStreak.toString() + " Best Streak:"+highestStreak.toString();
-    let winperc = Math.floor((totalWins - totalDaysAttempted) / (totalDaysAttempted) * 100);
-    if(isNaN(winperc))
-        winperc=0;
-    (document.getElementById("game-stats")).innerText = "Attempts: " + totalDaysAttempted.toString() + "  Wins:"+ totalWins.toString() + " ("+winperc.toString()+"%)";
+    (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / " + WORDS.length.toString() + " Streak:" + currentStreak.toString() + " Best Streak:" + highestStreak.toString();
+    updateStats();
 }
 
 initBoard();
