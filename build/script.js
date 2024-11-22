@@ -103,9 +103,6 @@ function isSpecialCharacter(c) {
 function shadeKeyBoard(letter, color) {
     for (const elem of document.getElementsByClassName("keyboard-button")) {
         if (elem.textContent === letter) {
-            if (color === "green" || color === "gray")
-                elem.style.color = "white";
-            let oldColor = elem.style.backgroundColor;
             if (oldColor === "green") {
                 return;
             }
@@ -113,6 +110,10 @@ function shadeKeyBoard(letter, color) {
             if (oldColor === "orange" && color !== "green") {
                 return;
             }
+
+            if (color === "green" || color === "gray")
+                elem.style.color = "white";
+            let oldColor = elem.style.backgroundColor;
 
             elem.style.backgroundColor = color;
             break;
