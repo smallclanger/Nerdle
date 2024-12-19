@@ -56,8 +56,11 @@ let dates = [
     {
         "specialDate": "04/05",
         "message": "Happy Star Wars Day!"
+    },
+    {
+        "specialDate": "28/11",
+        "message": "Happy Birthday Stew!"
     }
-
 ];
 
 function loadHistory() {
@@ -464,7 +467,7 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function () {
-    const totalbackgrounds = 19; // 0-19
+    const totalbackgrounds = 20; // 0-20
     console.log('background' + ((indexForTodaysWord + 52) % totalbackgrounds).toString());
 
     var urlstring = 'url(images/background' + (indexForTodaysWord % totalbackgrounds) + '.jpg)';
