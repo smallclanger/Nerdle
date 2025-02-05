@@ -36,13 +36,14 @@ form {
 
 #titles {
 	background-color:rgba(50,50,50,0.75);
-  border: 1px solid rgb(128, 128, 128);
+	border: 1px solid rgb(128, 128, 128);
+	font-family: Deathstar, Verdana, Geneva, Tahoma, sans-serif;
+  
 }
 
 .close-btn {
-	  height:40px;
-    width:40px;
-	
+	height:40px;
+    width:40px;	
 }
 
 .letter-box {
@@ -85,7 +86,7 @@ form {
   color:rgb(255, 255, 255);
 }
 
-.filled-box {
+.filled-box {	
   border: 2px solid gray;
   color:white
 }
@@ -120,6 +121,7 @@ form {
 
 .keyboard-button {
   font-family: SceletAF, Helvetica, sans-serif;
+  
   font-size: 1rem;
   font-weight: 700;
   padding: 0.5rem;
@@ -134,7 +136,7 @@ form {
 	display:none;
   border: 3px solid #f1f1f1;
   background-color: rgb(236, 200, 40);   
-  
+  font-family: Deathstar, Verdana, Geneva, Tahoma, sans-serif;
   align-items: center;
   justify-content: center; 
   position:fixed;
@@ -168,4 +170,20 @@ form {
 
 .correctWord {
   font-size: 2rem; 
+ background-color: rgb(226, 90, 40);    
+ font-family: Deathstar, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+@font-face {
+    font-family: 'Deathstar';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src: url('https://cdn.designly.biz/fonts/deathstar/death_star-webfont.eot');
+    src: local(''),
+        url('https://cdn.designly.biz/fonts/deathstar/death_star-webfont.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.designly.biz/fonts/deathstar/death_star-webfont.woff2') format('woff2'),
+        url('https://cdn.designly.biz/fonts/deathstar/death_star-webfont.woff') format('woff'),
+        url('https://cdn.designly.biz/fonts/deathstar/deathstar.otf') format('opentype'),
+        url('https://cdn.designly.biz/fonts/deathstar/death_star-webfont.svg') format('svg');
 }
