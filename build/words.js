@@ -861,5 +861,9 @@ export const WORDS = [
 	'bayrn',
 	'poe dameron',
 	'echo',
-	'edmon rampart'	
+	'edmon rampart',
+	'at attin',
+	'port borgo',
+	'kh\'ymm',
+	'at achrann'	
 ]
