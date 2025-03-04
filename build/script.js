@@ -60,6 +60,10 @@ let dates = [
     {
         "specialDate": "28/11",
         "message": "Happy Birthday Stew!"
+    },
+    {
+        "specialDate": "01/04",
+        "message": "Happy April Fools!"
     }
 ];
 
@@ -124,6 +128,32 @@ function shadeKeyBoard(letter, color) {
     }
 }
 
+String.prototype.shuffle = function () {
+    var a = this.split(""),
+        n = a.length;
+
+    for(var i = n - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    return a.join("");
+}
+
+// April 1st randomize keyboard
+function randomizeKeyboard()
+{
+	let chars = "1234567890abcdefghijklmnopqrstuvwxyz";
+	let randomchars = chars.shuffle();
+	let counter=0;
+	for (const elem of document.getElementsByClassName("keyboard-button")) {
+		if( elem.id==="del-button") continue;
+		if( elem.textContent==="Enter") continue;
+		elem.textContent = randomchars[counter++];
+	}
+}
+
 function deleteLetter() {
     let row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
     let box = row.children[nextLetter - 1];
@@ -141,6 +171,8 @@ function deleteLetter() {
         currentGuess.pop();
         nextLetter -= 1;
     }
+	
+	checkIfPreviousAnswer();
 }
 
 String.prototype.replaceAt = function(index, replacement) {
@@ -337,6 +369,32 @@ function insertLetter(pressedKey) {
     }
 
     storeSession();
+	
+	// see if this is a previous answer
+	checkIfPreviousAnswer();
+}
+
+function checkIfPreviousAnswer()
+{
+    let guessString = "";    
+    for (const val of currentGuess) {
+        guessString += val;
+    }
+	
+	document.getElementById("prevanswer").textContent="";
+    if (guessString.length != rightGuessString.length) {
+        return;
+    }	
+
+	for (let i = indexForTodaysWord-1; i>=0 ; --i) {
+		if(guessString === WORDS[i])
+		{		
+			console.log("old answer"); // indicate somewhere but dont block submitting the answer?
+			 
+			document.getElementById("prevanswer").textContent="Previous Answer";
+			break;
+		}
+    }
 }
 
 function storeSession() {
@@ -525,6 +583,9 @@ window.onload = function () {
 
     (document.getElementById("game-number")).innerText = "Game: " + indexForTodaysWord.toString() + " / " + WORDS.length.toString() + " Streak:" + currentStreak.toString() + " Best Streak:" + highestStreak.toString();
     updateStats();
+	
+	if(dateString==="01/04")
+		randomizeKeyboard();
 }
 
 initBoard();
