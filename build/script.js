@@ -493,6 +493,15 @@ document.getElementById("myForm").addEventListener("click", (e) => {
         return;
     }
 
+    if (target.classList.contains("lookup-btn")) {
+		// https://www.google.com/search?q=obiwan+star+wars
+		const newURL = new URL("http://google.com/search");
+		//newURL.pathname = "/new-path";
+		newURL.searchParams.set("q", rightGuessString + " star wars");
+		window.open(newURL, '_blank').focus();
+        return;
+    }
+
     if (!target.classList.contains("share-btn")) {
         return;
     }
