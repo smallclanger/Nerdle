@@ -1,6 +1,6 @@
 import { WORDS } from "./words.js";
 
-const NUMBER_OF_GUESSES = 6;
+const NUMBER_OF_GUESSES = 8;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
