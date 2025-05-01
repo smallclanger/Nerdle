@@ -538,7 +538,7 @@ document.getElementById("myForm").addEventListener("click", (e) => {
 });
 
 window.onload = function () {
-    const totalbackgrounds = 20; // 0-20
+    const totalbackgrounds = 23; // 0-20
     console.log('background' + ((indexForTodaysWord + 52) % totalbackgrounds).toString());
 
     var urlstring = 'url(images/background' + (indexForTodaysWord % totalbackgrounds) + '.jpg)';
