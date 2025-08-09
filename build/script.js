@@ -362,7 +362,8 @@ function insertLetter(pressedKey) {
     box.classList.add("filled-box");
     currentGuess.push(pressedKey);
     nextLetter += 1;
-    if (isSpecialCharacter(rightGuessString[nextLetter])) {
+    
+    while (isSpecialCharacter(rightGuessString[nextLetter])) {
         console.log("jumping over next character as it is special " + rightGuessString[nextLetter]);
         currentGuess.push(rightGuessString[nextLetter]);
         nextLetter += 1;
