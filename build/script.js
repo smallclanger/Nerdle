@@ -26,7 +26,7 @@ const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 let dates = [
     {
-        "specialDate": "06/09",
+        "specialDate": "06/10",
         "message": "Happy Birthday Harvey!"
     },
     {
