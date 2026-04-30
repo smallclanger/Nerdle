@@ -107,21 +107,28 @@ function isSpecialCharacter(c) {
     return " -'/.".includes(c);
 }
 
+const KEY_STATE_PRIORITY = {
+    gray: 1,
+    orange: 2,
+    green: 3,
+};
+
 function shadeKeyBoard(letter, color) {
     for (const elem of document.getElementsByClassName("keyboard-button")) {
         if (elem.textContent === letter) {
-			let oldColor = elem.style.backgroundColor;
-            if (oldColor === "green") {
+            const oldState = elem.dataset.keyState || "";
+            const oldPriority = KEY_STATE_PRIORITY[oldState] || 0;
+            const newPriority = KEY_STATE_PRIORITY[color] || 0;
+
+            // Only allow upgrades: gray -> orange -> green.
+            if (newPriority < oldPriority) {
                 return;
             }
 
-            if (oldColor === "orange" && color !== "green") {
-                return;
-            }
-
-            if (color === "green" || color === "gray")
-                elem.style.color = "white";            
-
+            elem.dataset.keyState = color;
+            elem.style.color = "white";
+            // Override the default gradient background so state colors are visible.
+            elem.style.background = color;
             elem.style.backgroundColor = color;
             break;
         }
@@ -229,9 +236,10 @@ function checkGuess(rowIndex) {
     //check yellow
     //checking guess letters
     for (let guessIndex = 0; guessIndex < currentGuess.length; guessIndex++) {
+        if (letterColor[guessIndex] === "green")
+            continue;
+
         for (let answerIndex = 0; answerIndex < rightGuess.length; answerIndex++) {
-            if (letterColor[answerIndex] == "green")
-                continue;
             if (rightGuess[answerIndex] === "#")
                 continue;
             if (rightGuess[answerIndex] === currentGuess[guessIndex]) {
@@ -239,7 +247,7 @@ function checkGuess(rowIndex) {
                 rightGuess[answerIndex] = "#";
 
                 currentGuess = replaceAtIndex(currentGuess, guessIndex, "#");
-                continue;
+                break;
 
             }
         }
