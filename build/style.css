@@ -1,177 +1,309 @@
 
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@500;700&display=swap");
+
+:root {
+  --panel-bg: rgba(10, 17, 37, 0.78);
+  --panel-border: rgba(129, 178, 255, 0.35);
+  --text-main: #f8fbff;
+  --text-soft: #d2e4ff;
+  --accent-gold: #f2d16b;
+  --accent-blue: #72dcff;
+  --accent-green: #9af867;
+  --accent-violet: #c9a4ff;
+  --key-bg: #e4e9f5;
+  --key-shadow: rgba(7, 14, 38, 0.6);
+}
+
 * {
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	touch-action: manipulation;	
-}
-		
-h1 {
- text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  box-sizing: border-box;
 }
 
-h2 {
- text-align: center;
-}
-
-form {
-    width: 800px;
-}
-
-@media only screen and (max-width: 800px) {
-    form {
-        width: 100%;
-    }
-}
-
-#game-board {
-  
-  display: table;
-  table-layout:auto;
-  align-items: center;
-  flex-direction: column;  
-  justify-content: center;   
-  background-color:rgba(50,50,50,0.75);
-  width:100%;
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 1rem;
+  color: var(--text-main);
+  background-image:
+    linear-gradient(165deg, rgba(5, 10, 24, 0.84), rgba(10, 16, 38, 0.65)),
+    radial-gradient(circle at 80% 20%, rgba(114, 220, 255, 0.24), transparent 42%),
+    radial-gradient(circle at 20% 80%, rgba(155, 248, 103, 0.18), transparent 46%),
+    url("images/hyperspace.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: Rajdhani, "Segoe UI", sans-serif;
 }
 
 #titles {
-	background-color:rgba(50,50,50,0.75);
-	border: 1px solid rgb(128, 128, 128);
-	font-family: Deathstar, Verdana, Geneva, Tahoma, sans-serif;
-  
+  width: min(900px, 96vw);
+  margin: 0 auto 0.75rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+  animation: driftIn 450ms ease-out both;
 }
 
-.close-btn {
-	height:40px;
-    width:40px;	
-}
-
-.letter-box {
-  border: 1px solid rgb(128, 128, 128);
-  border-radius: 3px;
-  margin: 2px;
-  text-align:center;  
-  font-family: SceletAF, Helvetica, sans-serif;
-  font-size: 5cqw;
-  height: 2rem;
-  width: 3rem;
-  display: table-cell;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  vertical-align: middle;
-  color:white;
-}
-
-.letter-box:last-child {
-  margin-right: 0px;
-}
-
-#history-list {
-  color:rgb(200, 255, 255);
-}
-
-.space-box {
-  border:hidden;
-  margin: 2px;
-  text-align:center;  
-  font-family: SceletAF, Helvetica, sans-serif;
-  font-size: 5cqw;
-  font-weight: 400;
-  height: 3rem;
-  width: 2rem;
-  display: table-cell;
-  justify-content: center;
-  align-items: center;
-  color:rgb(255, 255, 255);
-}
-
-.filled-box {	
-  border: 2px solid gray;
-  color:white
-}
-
-.space-box.filled-box {
-  border:hidden;
-}
-
-.letter-row {
-  display: table-row;  
-}
-
-#keyboard-cont {
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width:100%;  
-}
-
-#keyboard-cont div {
-  display: flex;  
-}
-
-.second-row {
-  margin: 0.5rem 0;
-}
-
-.number-row {
-  margin: 0.5rem 0;
-}
-
-.keyboard-button {
-  font-family: SceletAF, Helvetica, sans-serif;
-  
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 0.5rem;
-  margin: 0 2px;
-  cursor: pointer;
-  text-transform: uppercase;
-  background-color:rgb(220,220,220);
-}
-
-/* The popup form - hidden by default */
-.form-popup {
-	display:none;
-  border: 3px solid #f1f1f1;
-  background-color: rgb(236, 200, 40);   
-  font-family: Deathstar, Verdana, Geneva, Tahoma, sans-serif;
-  align-items: center;
-  justify-content: center; 
-  position:fixed;
-  top:calc(25% - 150px);
-  left:calc(50% - 200px);
-  width:400px;
-  z-index:99999;
-}
-
-.shareButtonContainer{
-	display:grid;
-  align-items: center;
-  justify-content: center; 
+h1,
+h2 {
+  margin: 0.2rem 0;
   text-align: center;
 }
 
-.closeButtonContainer
-{
-  display:grid;
-  align-items: right;
-  justify-content: right; 
-  margin:1px;
+h1 {
+  font-family: Audiowide, Impact, sans-serif;
+  font-size: clamp(1.5rem, 4.2vw, 2.25rem);
+  letter-spacing: 0.06em;
+  color: var(--accent-gold);
+  text-shadow: 0 0 12px rgba(242, 209, 107, 0.4);
 }
 
-.share-btn {
+#special-date {
+  color: var(--accent-blue);
+}
+
+#game-number {
+  color: var(--accent-green);
+}
+
+#game-stats {
+  color: var(--accent-violet);
+}
+
+#game-board {
+  display: table;
+  table-layout: auto;
+  width: min(900px, 96vw);
+  margin: 0 auto;
+  padding: 0.65rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+  animation: driftIn 650ms ease-out both;
+}
+
+.letter-row {
+  display: table-row;
+}
+
+.letter-box,
+.space-box {
+  text-align: center;
+  font-family: Audiowide, sans-serif;
+  font-size: clamp(1rem, 3.6vw, 1.55rem);
+  height: clamp(2.1rem, 6vw, 2.75rem);
+  width: clamp(2.1rem, 8vw, 3rem);
+  display: table-cell;
+  vertical-align: middle;
+  color: #fff;
+}
+
+.letter-box {
+  border: 1px solid rgba(189, 206, 255, 0.45);
+  border-radius: 6px;
+  margin: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, rgba(44, 62, 98, 0.5), rgba(13, 21, 45, 0.6));
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.space-box {
+  border: hidden;
+  margin: 2px;
+  font-weight: 400;
+  width: clamp(1.1rem, 4vw, 1.8rem);
+}
+
+.filled-box {
+  border: 2px solid #9bb0dd;
+  color: #fff;
+}
+
+.space-box.filled-box {
+  border: hidden;
+}
+
+#prevanswer {
   display: block;
-  width: 300px;
+  width: min(900px, 96vw);
+  margin: 0.6rem auto 0;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 1.1rem;
+}
+
+#keyboard-cont {
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: min(900px, 96vw);
+}
+
+#keyboard-cont div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.keyboard-button {
+  min-width: clamp(1.95rem, 5.6vw, 2.8rem);
+  height: clamp(2.2rem, 6vw, 2.95rem);
+  border: 1px solid #9ca7c7;
+  border-radius: 10px;
+  font-family: Rajdhani, sans-serif;
+  font-size: clamp(0.9rem, 2.6vw, 1.08rem);
+  font-weight: 700;
+  padding: 0 0.45rem;
+  margin: 0 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: #101522;
+  background: linear-gradient(180deg, #f4f7ff, var(--key-bg));
+  box-shadow: 0 3px 0 #a8b3cf, 0 8px 18px -12px var(--key-shadow);
+  transition: transform 90ms ease, filter 140ms ease;
+}
+
+.keyboard-button:hover {
+  filter: brightness(1.05);
+}
+
+.keyboard-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #a8b3cf;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(420px, 94vw);
+  padding: 0.6rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(250, 229, 124, 0.95), rgba(228, 170, 38, 0.95));
+  color: #2e2109;
+  font-family: Rajdhani, sans-serif;
+  box-shadow: 0 20px 34px rgba(0, 0, 0, 0.45);
+  z-index: 99999;
+}
+
+.closeButtonContainer,
+.shareButtonContainer {
+  display: grid;
+}
+
+.closeButtonContainer {
+  justify-content: end;
+}
+
+.close-btn {
+  height: 38px;
+  width: 38px;
+  border: 1px solid #74581f;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+.shareButtonContainer {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.55rem;
+}
+
+.share-btn,
+.lookup-btn {
+  display: block;
+  width: min(300px, 84vw);
   height: 40px;
-  margin: auto;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 8px;
+  font-family: Rajdhani, sans-serif;
+  font-weight: 700;
+  background: #1e2f5f;
+  color: #f4f7ff;
+  cursor: pointer;
 }
 
 .correctWord {
-  font-size: 2rem; 
- background-color: rgb(226, 90, 40);    
- font-family: Deathstar, Verdana, Geneva, Tahoma, sans-serif;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  padding: 0.15rem 0.45rem;
+  border-radius: 8px;
+  background-color: rgba(226, 90, 40, 0.86);
+  font-family: Audiowide, sans-serif;
+}
+
+#Options-Row {
+  width: min(900px, 96vw);
+  margin: 0.2rem auto 0;
+  text-align: center;
+}
+
+.history-button {
+  min-width: 180px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  font-family: Rajdhani, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  background: rgba(11, 18, 39, 0.86);
+  cursor: pointer;
+}
+
+#history-list {
+  margin-top: 0.45rem;
+  color: #d9f6ff;
+  text-align: left;
+  max-height: 210px;
+  overflow-y: auto;
+  border: 1px solid rgba(129, 178, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(8, 14, 33, 0.62);
+}
+
+#myList {
+  margin: 0;
+  padding: 0.6rem 1.6rem;
+}
+
+@media only screen and (max-width: 800px) {
+  body {
+    padding: 0.6rem;
+  }
+
+  #titles,
+  #game-board,
+  #keyboard-cont,
+  #prevanswer,
+  #Options-Row {
+    width: 98vw;
+  }
+}
+
+@keyframes driftIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @font-face {
