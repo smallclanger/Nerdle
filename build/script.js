@@ -597,7 +597,7 @@ window.onload = function () {
     let dateString = zeroPad(d.getDate(), 2) + "/" + zeroPad(d.getMonth() + 1, 2);
     console.log("date=" + dateString);
     let specialDate = dates.find(d => d.specialDate === dateString);
-    if (!specialDate && d.getDay() == 2)
+    if (!specialDate && d.getDay() == 1)
         specialDate = { "message": "Happy Bin Night!" };
     if (specialDate) {
         (document.getElementById("special-date")).innerText = specialDate.message;
